@@ -18,7 +18,7 @@ router.get(
   asyncWrapper(controller.getNoticesByCategory)
 ); // 2 ендпоінт для отримання оголошень по категоріям
 
-router.get('/:noteceId', asyncWrapper(controller.getNoticeById)); // 3 ендпоінт для отримання одного оголошення
+router.get('/:noticeId', asyncWrapper(controller.getNoticeById)); // 3 ендпоінт для отримання одного оголошення
 
 router.post(
   '/:id/favourite',

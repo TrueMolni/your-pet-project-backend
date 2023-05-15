@@ -1,0 +1,162 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API Documentation",
+    "version": "1.0.1",
+    "description": "Documentation for the API endpoints. Team project with React & Node.js "
+  },
+  "consumes": ["application/json", "multipart/form-data"],
+  "produces": ["application/json", "multipart/form-data"],
+  "servers": [{ "url": "http://localhost:3030" }],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Authorization endpoints"
+    },
+    {
+      "name": "Notices",
+      "description": "Notice endpoints"
+    },
+    {
+      "name": "Pets",
+      "description": "Pet endpoints"
+    }
+  ],
+  "paths": {
+    "/register": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Get endpoint",
+        "responses": {
+          "200": {
+            "description": "Success response"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/login": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Get endpoint",
+        "responses": {
+          "200": {
+            "description": "Success response"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/api/notices/search": {
+      "get": {
+        "tags": ["Notices"],
+        "summary": "Пошук оголошення по заголовку",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "title",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Search query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response",
+            "content": {}
+          },
+          "404": {
+            "description": "Not found",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/api/notices/category/{categoryId}": {
+      "get": {
+        "tags": ["Notices"],
+        "summary": "Отримання оголошень по категоріям",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "categoryId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Category ID ('sell', 'lost-found', 'for-free')"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response",
+            "content": {}
+          },
+          "404": {
+            "description": "Not found",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/api/notices/{noticeId}": {
+      "get": {
+        "tags": ["Notices"],
+        "summary": "Отримання оголошення по id",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "noticeId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Search for a notice by id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response",
+            "content": {}
+          },
+          "404": {
+            "description": "Not found",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/pet": {
+      "post": {
+        "tags": ["Pets"],
+        "summary": "Create endpoint",
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Pets"],
+        "summary": "Delete endpoint",
+        "responses": {
+          "201": {
+            "description": "Deleted"
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        }
+      }
+    }
+  }
+}

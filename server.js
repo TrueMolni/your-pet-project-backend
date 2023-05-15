@@ -5,7 +5,6 @@ const app = require('./app');
 
 mongoose.set('strictQuery', true); // запити до БД мають відповідати схемі, тобто якщо деяке поле має тип String, а запит передає це поле як число, то запит буде відхилений і повернеться помилка.
 
-// const { DB_HOST, PORT = 3030 } = process.env;
 const PORT = process.env.PORT || 3030;
 const DB = process.env.MONGO_URL;
 const HOST = process.env.HOST;
