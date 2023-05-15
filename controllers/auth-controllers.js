@@ -44,7 +44,6 @@ export const googleAuth = async (req, res) => {
         code,
       },
     });
-    console.log("userData")
     const userData = await axios({
       url: "https://www.googleapis.com/oauth2/v2/userinfo",
       method: "get",
@@ -54,20 +53,16 @@ export const googleAuth = async (req, res) => {
     });
     const userEmail = userData.data.email;
     const userId = userData.data.id;
-    if (!email){ throw HttpError(401,"You must register")};
-    if()
-
-    const payload = { id: userData.data.id };
-  
+    const userName = userData.data.name;
+    const payload = { id: userId };
     const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "23h" });
-    await User.create({ token,email, });
-    res.json({ token });
-    // userData.data.email
-    // ...
-    // ...
-    // ...
+
+    
+await User.create({name:userName,token,email:userEmail,password:userId+userName });
+// res.json({ token });
+   
     return res.redirect(
-      `${process.env.FRONTEND_URL}?email=${userData.data.email}`
+      `${process.env.FRONTEND_URL}/?token=${token}`
     );
   };
 
