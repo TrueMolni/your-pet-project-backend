@@ -62,7 +62,7 @@ await User.create({name:userName,token,email:userEmail,password:userId+userName 
 // res.json({ token });
    
     return res.redirect(
-      `${process.env.FRONTEND_URL}/?token=${token}`
+      `${process.env.FRONTEND_URL}/your-pet-project-frontend`
     );
   };
 
