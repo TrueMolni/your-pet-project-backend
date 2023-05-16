@@ -3,7 +3,7 @@ const Joi = require('joi');
 
 const noticeSchema = Joi.object({
   category: Joi.string()
-    .valid('my pet', 'sell', 'lost-found', 'for-free')
+    .valid('sell', 'lost-found', 'for-free')
     .required()
     .messages({
       'any.required': 'Select a category for the notice',

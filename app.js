@@ -1,11 +1,11 @@
 const express = require('express');
 const logger = require('morgan');
 const cors = require('cors');
+const swaggerUi = require('swagger-ui-express');
 
-// const contactsRouter = require('./routes/api/announcements');
+const swaggerDocument = require('./swagger.json');
+
 const noticeRouter = require('./routes/api/notices');
-
-const { errorHandler } = require('./helpers/apiHelpers');
 
 const app = express();
 
@@ -15,11 +15,9 @@ app.use(logger(formatsLogger));
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-// app.use('/api/contacts', contactsRouter);
 app.use('/api/notices', noticeRouter);
-
-app.use(errorHandler); // Кастомний обробник помилок
 
 app.use((req, res) => {
   res.status(404).json({ message: 'Not found' });
