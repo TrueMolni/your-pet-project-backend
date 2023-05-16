@@ -12,3 +12,4 @@
   виправленнями простих помилок
 - `npx nodemon server.js` &mdash; запускаємо сервер з використанням nodemon {
   npm i --save-dev nodemon }
+- `http://localhost:3030/api-docs/` &mdash; Swagger

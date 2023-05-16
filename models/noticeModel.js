@@ -5,20 +5,20 @@ const noticeSchema = new Schema(
   {
     title: {
       type: String,
-      required: [true, 'Set a name for the notice'],
-      minlength: [16, 'Name must have at least 16 characters'],
-      maxlength: [60, 'Name cannot exceed 60 characters'],
+      required: [true, 'Set a title for the animal'],
+      minlength: [16, 'Title must have at least 16 characters'],
+      maxlength: [35, 'Title cannot exceed 35 characters'],
     },
 
     category: {
       type: String,
-      enum: ['my pet', 'sell', 'lost-found', 'for-free'],
+      enum: ['sell', 'lost-found', 'for-free'],
       required: [true, 'Select a category for the notice'],
     },
 
     name: {
       type: String,
-      required: [true, 'Set a name for the notice'],
+      required: [true, 'Set a name for the animal'],
       minlength: [2, 'Name must have at least 2 characters'],
       maxlength: [16, 'Name cannot exceed 16 characters'],
     },
@@ -26,6 +26,7 @@ const noticeSchema = new Schema(
     date: {
       type: String,
       required: true,
+      default: Date.now(),
       validate: {
         validator: function (value) {
           // Перевірка формату дати (22.10.2022)
@@ -38,14 +39,14 @@ const noticeSchema = new Schema(
 
     breed: {
       type: String,
-      required: [true, 'Set a breed for the notice'],
+      required: [true, 'Set a breed for the animal'],
       minlength: [2, 'Breed must have at least 2 characters'],
       maxlength: [26, 'Breed cannot exceed 16 characters'],
     },
 
     avatarURL: {
       type: String,
-      required: [true, 'Upload a file for the notice'],
+      required: [true, 'Upload a file with a photo of the animal'],
       maxlength: [3 * 1024 * 1024, 'File size exceeds the limit (3MB)'],
     },
 

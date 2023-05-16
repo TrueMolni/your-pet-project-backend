@@ -9,7 +9,6 @@ const { asyncWrapper } = require('../../helpers/apiHelpers');
 
 router.get('/', asyncWrapper(controller.getAllNotices)); //! {видалити} 0 ендпоінт для отримання всії оголошеннь
 router.post('/', asyncWrapper(controller.addNewNotice)); //! {видалити} 10 ендпоінт для створення нового оголошення
-// router.post('/new/', validation(noticeSchema), asyncWrapper(controller.addNewNotice) ); //! {видалити} 10 ендпоінт для створення нового оголошення
 
 router.get('/search', asyncWrapper(controller.getNoticesByTitle)); // 1 ендпоінт для пошуку оголошеннь по заголовку
 
