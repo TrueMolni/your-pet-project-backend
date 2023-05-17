@@ -49,10 +49,17 @@ const infoUserSchema = Joi.object({
 
 const loginJoiSchema = Joi.object({
   password: Joi.string().min(6).required(),
+ 
+  confirmPassword: Joi.any()
+    .equal(Joi.ref('password'))
+    .required()
+    .label('Confirm password')
+    .messages({ 'any.only': '{{#label}} does not match' }),
+    
   email: Joi.string().required(),
 });
 
 const User = model('user', userSchema);
 
 module.exports = { User, infoUserSchema, loginJoiSchema };
-// bcrypt,axios,queryString
+
