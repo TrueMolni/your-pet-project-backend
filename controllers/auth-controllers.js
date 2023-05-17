@@ -1,5 +1,5 @@
 const { HttpError } =require("../helpers/HttpError.js");
-const { User, loginJoiSchema} =require("../models/users.js");
+const { User, loginJoiSchema,infoUserSchema} =require("../models/users.js");
 const bcrypt =require("bcryptjs");
 const jwt =require("jsonwebtoken");
 const axios =require("axios");
@@ -98,9 +98,23 @@ const ctrlLogOut = async (req, res) => {
   res.json({ message: "LogOut success" });
 };
 
-
+const ctrlUserInfo = async (req, res) => {
+  const { error } = infoUserSchema.validate(req.body);
+  if (error) {
+    throw HttpError(400, error.message);
+  }
+  const { name,age,gender,avatarUrl } = req.body;
+  const { _id } = req.user;
+  const result = await User.findByIdAndUpdate(_id, { name,age,gender,avatarUrl });
+  if (!result) {
+    throw HttpError(404, `User with id ${_id} not found:(`);
+  }
+  
+  res.send(req.body);
+};
 
 const  ctrls ={
+  ctrlUserInfo,
       googleAuth,
       googleRedirect,
       ctrlRegisterUser,

@@ -16,10 +16,18 @@ const userSchema = new Schema(
       type: String,
       default: null,
     },
-    // avatarURL: {
-    //   type: String,
-    //   required: true,
-    // },
+    avatarURL: {
+      type: String,
+      required: false,
+    },
+    name: { type: String, require: false },
+    age: { type: Number, require: false },
+    gender: {
+      type: String,
+      require: false,
+      enum: ['male', 'female'],
+      default: 'female',
+    },
     // verify: {
     //   type: Boolean,
     //   default: false,
@@ -32,11 +40,12 @@ const userSchema = new Schema(
   { versionKey: false, timestamps: true }
 );
 
-// const passwordJoiSchema = Joi.object({
-//   name: Joi.string().required(),
-//   email: Joi.string().required(),
-//   password: Joi.string().min(6).required(),
-// });
+const infoUserSchema = Joi.object({
+  avatarUrl: Joi.string(),
+  name: Joi.string().required(),
+  gender: Joi.string().required(),
+  age: Joi.number(),
+});
 
 const loginJoiSchema = Joi.object({
   password: Joi.string().min(6).required(),
@@ -45,7 +54,5 @@ const loginJoiSchema = Joi.object({
 
 const User = model('user', userSchema);
 
-module.exports = { User, 
-  // passwordJoiSchema, 
-  loginJoiSchema };
-// bcrypt,axios,queryString  
+module.exports = { User, infoUserSchema, loginJoiSchema };
+// bcrypt,axios,queryString
