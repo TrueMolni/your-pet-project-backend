@@ -2,7 +2,7 @@ const getAllNotices = require('./0_getAllNotices');
 const getNoticesByTitle = require('./1_getNoticesByTitle');
 const getNoticesByCategory = require('./2_getNoticesByCategory');
 const getNoticeById = require('./3_getNoticeById');
-const addNoticeToFavorite = require('./4_addNoticeToFavorite');
+const updateFavorite = require('./4_updateFavorite');
 const getAllNoticesByAuthUserAddedToFavorites = require('./5_getAllNoticesByAuthUserAddedToFavorites');
 const delNoticeByAuthUserAddedToFavorites = require('./6_delNoticeByAuthUserAddedToFavorites');
 const addNoticeByIdCategory = require('./7_addNoticeByIdCategory');
@@ -15,7 +15,7 @@ module.exports = {
   getNoticesByTitle,
   getNoticesByCategory,
   getNoticeById,
-  addNoticeToFavorite,
+  updateFavorite,
   getAllNoticesByAuthUserAddedToFavorites,
   delNoticeByAuthUserAddedToFavorites,
   addNoticeByIdCategory,
