@@ -7,7 +7,7 @@ const validation = require('../../middlewares/validation');
 const { noticeSchema } = require('../../models/noticeModel');
 const { asyncWrapper } = require('../../helpers/apiHelpers');
 
-router.get('/', asyncWrapper(controller.getAllNotices)); //! {видалити} 0 ендпоінт для отримання всії оголошеннь
+router.get('/', asyncWrapper(controller.getAllNotices)); //! {видалити} 0 ендпоінт для отримання всіх оголошеннь
 router.post('/', asyncWrapper(controller.addNewNotice)); //! {видалити} 10 ендпоінт для створення нового оголошення
 
 router.get('/search', asyncWrapper(controller.getNoticesByTitle)); // 1 ендпоінт для пошуку оголошеннь по заголовку
@@ -19,10 +19,10 @@ router.get(
 
 router.get('/:noticeId', asyncWrapper(controller.getNoticeById)); // 3 ендпоінт для отримання одного оголошення
 
-router.post(
-  '/:id/favourite',
+router.patch(
+  '/favorite/:noticeId',
   validation(noticeSchema),
-  asyncWrapper(controller.addNoticeToFavorite)
+  asyncWrapper(controller.updateFavorite)
 ); // 4 ендпоінт для додавання оголошення до обраних
 
 router.get(
