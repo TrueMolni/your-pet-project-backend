@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "API Documentation",
-    "version": "1.0.1",
+    "version": "1.0.9",
     "description": "Documentation for the API endpoints. Team project with React & Node.js "
   },
   "consumes": ["application/json", "multipart/form-data"],
@@ -22,6 +22,7 @@
       "description": "Pet endpoints"
     }
   ],
+
   "paths": {
     "/register": {
       "post": {
@@ -37,6 +38,7 @@
         }
       }
     },
+
     "/login": {
       "post": {
         "tags": ["Auth"],
@@ -51,10 +53,11 @@
         }
       }
     },
+
     "/api/notices/search": {
       "get": {
         "tags": ["Notices"],
-        "summary": "Пошук оголошення по заголовку",
+        "summary": "Search for a notice by title",
         "parameters": [
           {
             "in": "query",
@@ -78,10 +81,11 @@
         }
       }
     },
+
     "/api/notices/category/{categoryId}": {
       "get": {
         "tags": ["Notices"],
-        "summary": "Отримання оголошень по категоріям",
+        "summary": "Get notices by category",
         "parameters": [
           {
             "in": "path",
@@ -105,10 +109,13 @@
         }
       }
     },
+
     "/api/notices/{noticeId}": {
       "get": {
         "tags": ["Notices"],
-        "summary": "Отримання оголошення по id",
+        "summary": "Get one notice by id",
+        "description": "",
+        "operationId": "getNoticeById",
         "parameters": [
           {
             "in": "path",
@@ -122,44 +129,25 @@
         ],
         "responses": {
           "200": {
-            "description": "Success response",
-            "content": {}
-          },
-          "404": {
-            "description": "Not found",
-            "content": {}
-          }
-        }
-      }
-    },
-    "/api/notices/": {
-      "post": {
-        "tags": ["Notices"],
-        "summary": "Додати нове оголошення",
-        "requestBody": {
-          "description": "Дані нового оголошення",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/NewNotice"
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoticeSchema"
+                }
               }
             }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Успішне створення оголошення"
           },
           "404": {
-            "description": "Не знайдено"
+            "description": "Notice not found"
+          },
+          "500": {
+            "description": "Server error"
           }
         }
-      }
-    },
-    "/api/notices/{noticeId}": {
+      },
       "patch": {
-        "tags": ["notices"],
+        "tags": ["Notices"],
         "summary": "Update favorite status",
         "description": "",
         "operationId": "updateFavoriteStatus",
@@ -174,6 +162,39 @@
                 }
               }
             }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        },
+        "security": [{ "Bearer": [] }]
+      }
+    },
+
+    "/api/notices/notice": {
+      "post": {
+        "tags": ["Notices"],
+        "summary": "Add new notice",
+        "description": "",
+        "operationId": "addNotice",
+        "parameters": [],
+        "requestBody": {
+          "description": "New notice data",
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/NewNotice"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "successful operation"
           },
           "401": {
             "description": "Unauthorized"
@@ -213,6 +234,7 @@
       }
     }
   },
+
   "components": {
     "schemas": {
       "NewNotice": {
@@ -249,6 +271,7 @@
           },
           "avatarURL": {
             "type": "string",
+            "format": "binary",
             "maxLength": "3MB",
             "example": "https://www.purina.ua/sites/default/files/2021-02/BREED%20Hero_0059_golden_retriever.jpg"
           },
@@ -276,6 +299,117 @@
         },
         "required": ["title", "category", "name", "date", "breed", "avatarURL"]
       },
+
+      "NoticeSchema": {
+        "type": "object",
+        "required": [
+          "category",
+          "title",
+          "name",
+          "date",
+          "breed",
+          "sex",
+          "comments"
+        ],
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "Notice id",
+            "example": "63f72058bbba3338d0016353"
+          },
+          "category": {
+            "type": "string",
+            "description": "The Pet's category should be one of sell, lost-found, for-free",
+            "example": "sell"
+          },
+          "title": {
+            "type": "string",
+            "description": "Notices title",
+            "example": "Small fluffy hamster for sale, a descendant of a pet grizzly bear"
+          },
+          "name": {
+            "type": "string",
+            "description": "Pet's name",
+            "example": "Pipectobi"
+          },
+          "date": {
+            "type": "string",
+            "format": "dateTime",
+            "description": "Pet's birthday",
+            "example": "13.13.2013"
+          },
+          "breed": {
+            "type": "string",
+            "description": "Pet's breed",
+            "example": "Grizzly bear (YA tvoy dom truba shatal)"
+          },
+          "sex": {
+            "type": "string",
+            "description": "Pet's sex must be male or female",
+            "example": "male"
+          },
+          "location": {
+            "type": "string",
+            "description": "Pet's location",
+            "example": "New York, NY"
+          },
+          "price": {
+            "type": "integer",
+            "description": "Pet's price",
+            "example": "500"
+          },
+          "avatarURL": {
+            "type": "string",
+            "description": "Pet's photo",
+            "avatarURL": "https://res.cloudinary.com/dlhcsyg0o/image/upload/v1684493989/bear_wvc8fv.jpg"
+          },
+          "comments": {
+            "type": "string",
+            "description": "Some text about Pet",
+            "comments": "Do not feed the hamster a lot, because a bear will grow up and eat you."
+          },
+          "owner": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "description": "User's id",
+                "example": "63f3306945cc47c53a8fd33d"
+              },
+              "email": {
+                "type": "string",
+                "description": "User's email",
+                "format": "email",
+                "example": "masya@mimimi.com"
+              },
+              "name": {
+                "type": "string",
+                "description": "User's name",
+                "example": "Masya Mi-mi-mi"
+              }
+            }
+          }
+        },
+        "example": {
+          "_id": "63f330d345cc47c53a8fd34e",
+          "category": "sell",
+          "title": "Small fluffy hamster for sale, a descendant of a pet grizzly bear",
+          "name": "Pipectobi",
+          "birthDate": "13.13.2013",
+          "breed": "Grizzly bear (YA tvoy dom truba shatal)",
+          "sex": "male",
+          "location": "New York, NY",
+          "price": 500,
+          "avatarURL": "https://res.cloudinary.com/dlhcsyg0o/image/upload/v1684493989/bear_wvc8fv.jpg",
+          "comments": "Do not feed the hamster a lot, because a bear will grow up and eat you.",
+          "owner": {
+            "_id": "63f3306945cc47c53a8fd33d",
+            "email": "masya@mimimi.com",
+            "name": "Masya Mi-mi-mi"
+          }
+        }
+      },
+
       "FavoriteNotices": {
         "type": "object",
         "properties": {

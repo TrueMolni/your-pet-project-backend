@@ -6,24 +6,24 @@ const { notices: controller } = require('../../controllers');
 const validation = require('../../middlewares/validation');
 const { noticeSchema } = require('../../models/noticeModel');
 const { asyncWrapper } = require('../../helpers/apiHelpers');
+const { authenticate, uploadNotice } = require('../../middlewares');
 
 router.get('/', asyncWrapper(controller.getAllNotices)); //! {видалити} 0 ендпоінт для отримання всіх оголошеннь
-router.post('/', asyncWrapper(controller.addNewNotice)); //! {видалити} 10 ендпоінт для створення нового оголошення
 
-router.get('/search', asyncWrapper(controller.getNoticesByTitle)); // 1 ендпоінт для пошуку оголошеннь по заголовку
+router.get('/search', asyncWrapper(controller.getNoticesByTitle));
 
 router.get(
   '/category/:categoryId',
   asyncWrapper(controller.getNoticesByCategory)
-); // 2 ендпоінт для отримання оголошень по категоріям
+);
 
-router.get('/:noticeId', asyncWrapper(controller.getNoticeById)); // 3 ендпоінт для отримання одного оголошення
+router.get('/:noticeId', asyncWrapper(controller.getNoticeById));
 
 router.patch(
   '/favorite/:noticeId',
   validation(noticeSchema),
   asyncWrapper(controller.updateFavorite)
-); // 4 ендпоінт для додавання оголошення до обраних
+);
 
 router.get(
   '/:userid/:id/favourite',
@@ -36,10 +36,11 @@ router.delete(
 ); // 6 ендпоінт для видалення оголошення авторизованого користувача доданих цим же до обраних
 
 router.post(
-  '/:id/:categoryId',
-  validation(noticeSchema),
-  asyncWrapper(controller.addNoticeByIdCategory)
-); // 7 ендпоінт для додавання оголошень відповідно до обраної категорії
+  '/notice',
+  authenticate,
+  uploadNotice.single('image'),
+  asyncWrapper(controller.addNoticeByCategory)
+);
 
 router.get(
   '/:userid/:id/',

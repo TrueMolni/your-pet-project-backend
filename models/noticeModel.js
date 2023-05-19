@@ -57,11 +57,11 @@ const noticeSchema = new Schema(
     comments: {
       type: String,
     },
-    // owner: {
-    //   type: Schema.Types.ObjectId,
-    //   ref: 'users',
-    //   required: true,
-    // },
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: 'users',
+      required: true,
+    },
   },
   { versionKey: false, timestamps: true }
 );
