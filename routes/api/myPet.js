@@ -5,17 +5,31 @@ const router = express.Router();
 const {
   removeMyPet,
   addMyPet,
-  // addAvatar,
+  addAvatar,
 } = require('../../controllers/myPet/index');
 
-// const { validateBody } = require("../../utils/index");
 const { joiSchema } = require('../../models/myPetModel');
-const { uploadCloud, validation } = require('../../middlewares/index');
+const {
+  uploadCloud,
+  validation,
+  authenticate,
+} = require('../../middlewares/index');
 
-router.post('/', validation(joiSchema), uploadCloud.single('avatar'), addMyPet);
+router.post(
+  '/',
+  authenticate,
+  validation(joiSchema),
+  uploadCloud.single('avatar'),
+  addMyPet
+);
 
-// router.patch("/avatar", uploadCloud.single("avatar"), addAvatar);
+router.patch(
+  '/:petId/avatar',
+  authenticate,
+  uploadCloud.single('avatar'),
+  addAvatar
+);
 
-router.delete('/:petId', removeMyPet);
+router.delete('/:petId', authenticate, removeMyPet);
 
 module.exports = router;
