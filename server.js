@@ -16,7 +16,7 @@ mongoose
   })
   .then(() =>
     app.listen(PORT, HOST, () => {
-      console.log(`Server started: http://${HOST}:${PORT}/api/notices/`);
+      console.log(`Server started: http://${HOST}:${PORT}/api/`);
     })
   )
   .catch(error => {
