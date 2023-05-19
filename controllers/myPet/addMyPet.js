@@ -10,11 +10,11 @@ const addMyPet = async (req, res) => {
     throw HttpError(409, `Pet ${name} already in use`);
   }
 
-  // const { _id: owner } = req.user;
+  const { _id: owner } = req.user;
 
   const newPet = !!req.file
-    ? { avatarURL: req.file.path, ...req.body }
-    : { ...req.body };
+    ? { avatarURL: req.file.path, owner, ...req.body }
+    : { owner, ...req.body };
 
   const result = await MyPet.create({
     ...newPet,
