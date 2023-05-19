@@ -1,6 +1,6 @@
 // const path = require("path");
 // const { rename } = require("fs/promises");
-const { tryCatchWrapper } = require("../../utils/index");
+const { tryCatchWrapper } = require('../../utils/index');
 // const { MyPet } = require("../../models/myPetModel");
 // const Jimp = require("jimp");
 
