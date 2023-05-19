@@ -1,6 +1,9 @@
 {
   "name": "your-pet-project-backend",
   "version": "0.0.0",
+  "engines": {
+    "node": ">=14.20.1"
+  },
   "private": true,
   "scripts": {
     "start": "cross-env NODE_ENV=production node ./server.js",
