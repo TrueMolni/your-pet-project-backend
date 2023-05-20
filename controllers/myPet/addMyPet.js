@@ -12,7 +12,7 @@ const addMyPet = async (req, res) => {
 
   const { _id: owner } = req.user;
 
-  const newPet = !!req.file
+  const newPet = req.file
     ? { avatarURL: req.file.path, owner, ...req.body }
     : { owner, ...req.body };
 
