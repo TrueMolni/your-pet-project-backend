@@ -242,6 +242,80 @@
       }
     },
 
+    "/api/notices/own": {
+      "get": {
+        "tags": ["Notices"],
+        "summary": "Get own notices",
+        "description": " ",
+        "operationId": "getOwnNotice",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Notices"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        },
+        "security": [{ "Bearer": [] }]
+      }
+    },
+
+    "/api/notices/{noticeId}": {
+      "delete": {
+        "tags": ["Notices"],
+        "summary": "Delete a notice of an authorized user",
+        "description": "",
+        "operationId": "deleteNotice",
+        "parameters": [{ "name": "noticeId", "in": "path", "required": true }],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "integer",
+                      "description": "Notice id",
+                      "example": "6418cb61dea99f728afd5b48"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Notice not found"
+          },
+          "409": {
+            "description": "Notice with id: {noticeId} not in favorites"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        },
+        "security": [{ "Bearer": [] }]
+      }
+    },
+
     "/pet": {
       "post": {
         "tags": ["Pets"],

@@ -4,12 +4,11 @@ const getAllNotices = require('./0_getAllNotices');
 const getNoticesByTitle = require('./1_getNoticesByTitle');
 const getNoticesByCategory = require('./2_getNoticesByCategory');
 const getNoticeById = require('./3_getNoticeById');
-const updateFavorite = require('./4_updateFavorite');
+const updateFavorite = require('./4-6_updateFavorite');
 const getNoticeByFavorite = require('./5_getNoticeByFavorite');
-const delNoticeByAuthUserAddedToFavorites = require('./6_delNoticeByAuthUserAddedToFavorites');
 const addNoticeByCategory = require('./7_addNoticeByCategory');
-const getNoticesAuthUserByIdUser = require('./8_getNoticesAuthUserByIdUser');
-const delNoticesAuthUserByIdUser = require('./9_delNoticesAuthUserByIdUser');
+const getUserNotices = require('./8_getUserNotices');
+const deleteNoticeById = require('./9_deleteNoticeById');
 
 module.exports = {
   getAllNotices: asyncWrapper(getAllNotices),
@@ -18,10 +17,7 @@ module.exports = {
   getNoticeById: asyncWrapper(getNoticeById),
   updateFavorite: asyncWrapper(updateFavorite),
   getNoticeByFavorite: asyncWrapper(getNoticeByFavorite),
-  delNoticeByAuthUserAddedToFavorites: asyncWrapper(
-    delNoticeByAuthUserAddedToFavorites
-  ),
   addNoticeByCategory: asyncWrapper(addNoticeByCategory),
-  getNoticesAuthUserByIdUser: asyncWrapper(getNoticesAuthUserByIdUser),
-  delNoticesAuthUserByIdUser: asyncWrapper(delNoticesAuthUserByIdUser),
+  getUserNotices: asyncWrapper(getUserNotices),
+  deleteNoticeById: asyncWrapper(deleteNoticeById),
 };
