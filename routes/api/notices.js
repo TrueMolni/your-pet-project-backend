@@ -7,33 +7,24 @@ const { notices: controller } = require('../../controllers');
 
 const { authenticate, uploadNotice } = require('../../middlewares');
 
-router.get('/', controller.getAllNotices); //! {видалити} 0 ендпоінт для отримання всіх оголошеннь
+router.get('/', controller.getAllNotices); //! {видалити} 0 ендпоінт для отримання всіх оголошень
 
 router.get('/search', controller.getNoticesByTitle);
 router.get('/category/:categoryId', controller.getNoticesByCategory);
 router.get('/:noticeId', controller.getNoticeById);
-router.patch('/favorite/:noticeId', authenticate, controller.updateFavorite); //! 4
-// router.patch(
-//   '/favorite/:noticeId',
-//   authenticate,
-//   validation(noticeSchema),
-//   asyncWrapper(controller.updateFavorite)
-// ); //! 4
+router.patch('/favorite/:noticeId', authenticate, controller.updateFavorite); // 4-6
+// router.patch('/favorite/:noticeId', authenticate, validation(noticeSchema), asyncWrapper(controller.updateFavorite)); //! 4
 
-router.get('/favorite', authenticate, controller.getNoticeByFavorite); // 5 ендпоінт для отримання оголошень авторизованого користувача доданих ним же в обрані
-
-// router.delete('/:userid/:id/favorite', controller.delNoticeByAuthUserAddedToFavorites);
-// 6 ендпоінт для видалення оголошення авторизованого користувача доданих цим же до обраних
+router.get('/favorites', authenticate, controller.getNoticeByFavorite); // 5 ендпоінт для отримання оголошень авторизованого користувача доданих ним же в обрані
 
 router.post(
   '/notice',
   authenticate,
   uploadNotice.single('image'),
   controller.addNoticeByCategory
-);
+); // 7
 
-router.get('/:userid/notices', controller.getNoticesAuthUserByIdUser); //! 8 ендпоінт для отримання оголошень авторизованого користувача створених цим же користувачем
-
-router.delete('/:userid/:id/', controller.delNoticesAuthUserByIdUser); // 9 ендпоінт для видалення оголошення авторизованого користувача створеного цим же користувачем
+router.get('/own', authenticate, controller.getUserNotices); // 8
+router.delete('/:noticeId', authenticate, controller.deleteNoticeById); // 9
 
 module.exports = router;
