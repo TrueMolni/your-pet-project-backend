@@ -46,10 +46,14 @@ const userSchema = new Schema(
 );
 
 const infoUserSchema = Joi.object({
-  avatarUrl: Joi.string(),
-  name: Joi.string().required(),
-  gender: Joi.string().required(),
-  age: Joi.number(),
+  photo: Joi.string(),
+  name: Joi.string(),
+  email: Joi.string(),
+  phone: Joi.number(),
+  city:Joi.string(),
+  birthday:Joi.string()
+
+
 });
 
 const loginJoiSchema = Joi.object({
