@@ -21,21 +21,19 @@ const userSchema = new Schema(
       required: false,
     },
     name: { type: String, require: false },
-    age: { type: Number, require: false },
-    gender: {
+    photo: { type: String, require: false },
+    phone: {
+      type: Number,
+      require: false,
+    },  
+    city: {
       type: String,
       require: false,
-      enum: ['male', 'female'],
-      default: 'female',
     },
-    // verify: {
-    //   type: Boolean,
-    //   default: false,
-    // },
-    // verificationToken: {
-    //   type: String,
-    //   required: [true, 'Verify token is required'],
-    // },
+    birthday: {
+      type: String,
+      require: false,
+    },
     favoriteNotices: {
       type: [{ type: Schema.Types.ObjectId }],
       default: [],
@@ -51,7 +49,7 @@ const infoUserSchema = Joi.object({
   email: Joi.string(),
   phone: Joi.number(),
   city:Joi.string(),
-  birthday:Joi.string()
+  birthday:Joi.number()
 
 
 });
