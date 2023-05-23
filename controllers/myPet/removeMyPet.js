@@ -1,6 +1,7 @@
-const { MyPet } = require("../../models/myPetModel");
+const { MyPet } = require('../../models/myPetModel');
+const { HttpError } = require('../../helpers/HttpError');
 
-const { tryCatchWrapper } = require("../../utils/index");
+const { tryCatchWrapper } = require('../../utils/index');
 
 const removeMyPet = async (req, res) => {
   const { petId } = req.params;
@@ -9,7 +10,7 @@ const removeMyPet = async (req, res) => {
     throw HttpError(404`Pet with ${petId} not found`);
   }
 
-  res.json({ message: "deleting is successful", result });
+  res.json({ message: 'deleting is successful', result });
 };
 
 module.exports = { removeMyPet: tryCatchWrapper(removeMyPet) };
