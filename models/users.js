@@ -16,12 +16,9 @@ const userSchema = new Schema(
       type: String,
       default: null,
     },
-    avatarURL: {
-      type: String,
-      required: false,
-    },
+
     name: { type: String, require: false },
-    photo: { type: String, require: false },
+    avatar: { type: String, require: false },
     phone: {
       type: Number,
       require: false,
@@ -44,7 +41,7 @@ const userSchema = new Schema(
 );
 
 const infoUserSchema = Joi.object({
-  photo: Joi.string(),
+  avatar: Joi.string(),
   name: Joi.string(),
   email: Joi.string(),
   phone: Joi.number(),

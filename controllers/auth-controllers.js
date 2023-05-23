@@ -5,13 +5,12 @@ const jwt = require('jsonwebtoken');
 const axios = require('axios');
 const queryString = require('query-string');
 const gravatar = require('gravatar');
-const fs =require("fs/promises") ;
+// const fs =require("fs/promises") ;
 const path =require("path") ;
-const Jimp =require("jimp") ;
+// const Jimp =require("jimp") ;
 require('dotenv').config();
 
-const avatarsDir = path.join(__dirname, "../", "public", "usersPhotos");
-
+// const avatarsDir = path.join(__dirname, "../", "public", "usersPhotos");
 
 const { SECRET_KEY } = process.env;
 
@@ -139,21 +138,23 @@ const ctrlVerifyUser = async (req, res) => {
 };
 const ctrlAddUserInfo = async (req, res) => {
   const { _id } = req.user;
-  const { path: tempUpload, filename } = req.file;
-  await Jimp.read(tempUpload)
-    .then((image) => {
-      image.resize(180, 180);
-      image.write(tempUpload);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  const { 
+    // path: tempUpload,
+     filename } = req.file;
+  // await Jimp.read(tempUpload)
+  //   .then((image) => {
+  //     image.resize(180, 180);
+  //     image.write(tempUpload);
+  //   })
+  //   .catch((err) => {
+  //     console.log(err);
+  //   });
 
   const avatarName = `${_id}_${filename}`;
-  const resultUpload = path.join(avatarsDir, avatarName);
-  await fs.rename(tempUpload, resultUpload);
-  const avatarURL = path.join("photo", avatarName);
-  await User.findByIdAndUpdate(_id, { photo:avatarURL });
+  // const resultUpload = path.join(avatarsDir, avatarName);
+  // await fs.rename(tempUpload, resultUpload);
+  const avatarURL = path.join("avatar", avatarName);
+  await User.findByIdAndUpdate(_id, { avatar:avatarURL });
   const { error } = infoUserSchema.validate(req.body);
   if (error) {
     throw HttpError(400, error.message);
@@ -170,7 +171,7 @@ const ctrlAddUserInfo = async (req, res) => {
     throw HttpError(404, `User with id ${_id} not found:(`);
   }
 const data = {name,
-  photo:avatarURL,
+  avatar:avatarURL,
   birthday,
   email,
   phone,
@@ -181,7 +182,7 @@ const data = {name,
 const ctrlGetUserInfo = async (req, res) => {
   const { _id } = req.user;
 
-  const result = await User.find(_id);
+  const result = await User.find(_id,"name email phone photo city birthday");
   if (!result) {
     throw HttpError(404, `User with id ${_id} not found:(`);
   }
