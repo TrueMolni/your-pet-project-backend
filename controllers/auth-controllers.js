@@ -5,8 +5,10 @@ const jwt = require('jsonwebtoken');
 const axios = require('axios');
 const queryString = require('query-string');
 const gravatar = require('gravatar');
+const cloudinary = require('cloudinary').v2;
+
 // const fs =require("fs/promises") ;
-const path =require("path") ;
+// const path =require("path") ;
 // const Jimp =require("jimp") ;
 require('dotenv').config();
 
@@ -137,24 +139,21 @@ const ctrlVerifyUser = async (req, res) => {
   }
 };
 const ctrlAddUserInfo = async (req, res) => {
-  const { _id } = req.user;
-  const { 
-    // path: tempUpload,
-     filename } = req.file;
-  // await Jimp.read(tempUpload)
-  //   .then((image) => {
-  //     image.resize(180, 180);
-  //     image.write(tempUpload);
-  //   })
-  //   .catch((err) => {
-  //     console.log(err);
-  //   });
 
-  const avatarName = `${_id}_${filename}`;
-  // const resultUpload = path.join(avatarsDir, avatarName);
-  // await fs.rename(tempUpload, resultUpload);
-  const avatarURL = path.join("avatar", avatarName);
-  await User.findByIdAndUpdate(_id, { avatar:avatarURL });
+  cloudinary.config({
+    cloud_name: "ddinaq6n3",
+    api_key: "149358935256577",
+    api_secret: "yZ1Z3Y6t9OmL_yHQbk5WESOp570",
+
+  });
+  const { _id } = req.user;
+  const {filename} = req.file;
+  const url = cloudinary.url(filename,{width: 180,
+    height: 180,
+    Crop: 'fill'})
+ // const avatarURL = path;
+
+  await User.findByIdAndUpdate(_id, { avatar:url });
   const { error } = infoUserSchema.validate(req.body);
   if (error) {
     throw HttpError(400, error.message);
@@ -171,7 +170,7 @@ const ctrlAddUserInfo = async (req, res) => {
     throw HttpError(404, `User with id ${_id} not found:(`);
   }
 const data = {name,
-  avatar:avatarURL,
+  avatar:url,
   birthday,
   email,
   phone,
