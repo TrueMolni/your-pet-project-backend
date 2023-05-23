@@ -72,7 +72,13 @@
         "responses": {
           "200": {
             "description": "Success response",
-            "content": {}
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Search"
+                }
+              }
+            }
           },
           "404": {
             "description": "Not found",
@@ -100,80 +106,19 @@
         "responses": {
           "200": {
             "description": "Success response",
-            "content": {}
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CategoryNotices"
+                }
+              }
+            }
           },
           "404": {
             "description": "Not found",
             "content": {}
           }
         }
-      }
-    },
-
-    "/api/notices/{noticeId}": {
-      "get": {
-        "tags": ["Notices"],
-        "summary": "Get one notice by id",
-        "description": "",
-        "operationId": "getNoticeById",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "noticeId",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Search for a notice by id"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/NoticeSchema"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Notice not found"
-          },
-          "500": {
-            "description": "Server error"
-          }
-        }
-      }
-    },
-
-    "/api/notices/favorite/{noticeId}": {
-      "patch": {
-        "tags": ["Notices"],
-        "summary": "Update favorite status",
-        "description": "",
-        "operationId": "updateFavoriteStatus",
-        "parameters": [{ "name": "noticeId", "in": "path", "required": true }],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FavoriteNotices"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "400": {
-            "description": "Bad request"
-          }
-        },
-        "security": [{ "Bearer": [] }]
       }
     },
 
@@ -203,39 +148,6 @@
           },
           "404": {
             "description": "Not found"
-          }
-        },
-        "security": [{ "Bearer": [] }]
-      }
-    },
-
-    "/api/notices/notice": {
-      "post": {
-        "tags": ["Notices"],
-        "summary": "Add new notice",
-        "description": "",
-        "operationId": "addNotice",
-        "parameters": [],
-        "requestBody": {
-          "description": "New notice data",
-          "required": true,
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "$ref": "#/components/schemas/NewNotice"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "successful operation"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "400": {
-            "description": "Bad request"
           }
         },
         "security": [{ "Bearer": [] }]
@@ -275,6 +187,41 @@
     },
 
     "/api/notices/{noticeId}": {
+      "get": {
+        "tags": ["Notices"],
+        "summary": "Get one notice by id",
+        "description": "",
+        "operationId": "getNoticeById",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "noticeId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Search for a notice by id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoticeSchema"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Notice not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      },
       "delete": {
         "tags": ["Notices"],
         "summary": "Delete a notice of an authorized user",
@@ -310,6 +257,68 @@
           },
           "500": {
             "description": "Server error"
+          }
+        },
+        "security": [{ "Bearer": [] }]
+      }
+    },
+
+    "/api/notices/favorite/{noticeId}": {
+      "patch": {
+        "tags": ["Notices"],
+        "summary": "Update favorite status",
+        "description": "",
+        "operationId": "updateFavoriteStatus",
+        "parameters": [{ "name": "noticeId", "in": "path", "required": true }],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FavoriteNotices"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        },
+        "security": [{ "Bearer": [] }]
+      }
+    },
+
+    "/api/notices/notice": {
+      "post": {
+        "tags": ["Notices"],
+        "summary": "Add new notice",
+        "description": "",
+        "operationId": "addNotice",
+        "parameters": [],
+        "requestBody": {
+          "description": "New notice data",
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/NewNotice"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "successful operation"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Bad request"
           }
         },
         "security": [{ "Bearer": [] }]
@@ -417,7 +426,41 @@
             "items": {
               "type": "object",
               "$ref": "#/components/schemas/Notice"
-            }
+            },
+            "example": [
+              {
+                "_id": "645faa8b183a745b1eb88f73",
+                "name": "Bobik",
+                "date": "13.05.2023",
+                "breed": "Fooblya",
+                "comments": "Someone takes this dumb and stupid dog away!",
+                "__v": 0,
+                "category": "sell",
+                "location": "Los Angeles, CA",
+                "sex": "male",
+                "title": "Cute and playful puppy for sale.",
+                "avatarURL": "https://res.cloudinary.com/dlhcsyg0o/image/upload/v1684752418/dog_ayamlf.jpg",
+                "owner": "6468f9254da760fc35d0aa3c",
+                "createdAt": "1970-05-20T19:18:45.065Z",
+                "updatedAt": "2000-05-20T19:18:45.065Z"
+              },
+              {
+                "_id": "646b207991915fbf1b3aa0a2",
+                "title": "BeautifulHouse snail Akhatin",
+                "category": "for-free",
+                "name": "Cheetah",
+                "date": "22.09.2020",
+                "breed": "Akhatin",
+                "avatarURL": "https://i1.poltava.to/news/22/2188/photo.jpg",
+                "sex": "male",
+                "location": "New York, NY",
+                "price": 800,
+                "comments": "Loves vegetables, herbs and outdoor activities",
+                "owner": "6468f9254da760fc35d0aa3c",
+                "createdAt": "2021-05-22T07:57:45.382Z",
+                "updatedAt": "2023-05-22T07:57:45.382Z"
+              }
+            ]
           }
         }
       },
@@ -540,17 +583,141 @@
             "properties": {
               "email": {
                 "type": "string",
-                "format": "email"
+                "format": "email",
+                "example": "user@example.com"
               },
               "favoriteNotices": {
                 "type": "array",
                 "items": {
                   "type": "string"
-                }
+                },
+                "example": [
+                  "645faa8b183a745b1eb88f73",
+                  "645fad1eda57be6cc358be0a",
+                  "64691d1530fea300853502b9",
+                  "646b207991915fbf1b3aa0a2"
+                ]
               }
             }
           }
         }
+      },
+      "Search": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "integer",
+            "example": 2
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/NoticeExample"
+            }
+          }
+        }
+      },
+      "CategoryNotices": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Notice"
+            },
+            "example": [
+              {
+                "_id": "645faa8b183a745b1eb88f73",
+                "name": "Bobik",
+                "date": "13.05.2023",
+                "breed": "Fooblya",
+                "comments": "Someone takes this dumb and stupid dog away!",
+                "__v": 0,
+                "category": "sell",
+                "location": "Los Angeles, CA",
+                "sex": "male",
+                "title": "Cute and playful puppy for sale.",
+                "avatarURL": "https://res.cloudinary.com/dlhcsyg0o/image/upload/v1684752418/dog_ayamlf.jpg",
+                "createdAt": "1970-05-20T19:18:45.065Z",
+                "updatedAt": "2000-05-20T19:18:45.065Z"
+              },
+              {
+                "_id": "646b207991915fbf1b3aa0a2",
+                "title": "BeautifulHouse snail Akhatin",
+                "category": "for-free",
+                "name": "Cheetah",
+                "date": "22.09.2020",
+                "breed": "Akhatin",
+                "avatarURL": "https://i1.poltava.to/news/22/2188/photo.jpg",
+                "sex": "male",
+                "location": "New York, NY",
+                "price": 800,
+                "comments": "Loves vegetables, herbs and outdoor activities",
+                "owner": "6468f9254da760fc35d0aa3c",
+                "createdAt": "2021-05-22T07:57:45.382Z",
+                "updatedAt": "2023-05-22T07:57:45.382Z"
+              }
+            ]
+          }
+        }
+      },
+      "Notice": {
+        "type": "object",
+        "properties": {
+          "_id": { "type": "string" },
+          "name": { "type": "string" },
+          "date": { "type": "string" },
+          "breed": { "type": "string" },
+          "comments": { "type": "string" },
+          "__v": { "type": "integer" },
+          "category": { "type": "string" },
+          "location": { "type": "string" },
+          "sex": { "type": "string" },
+          "title": { "type": "string" },
+          "avatarURL": { "type": "string" },
+          "createdAt": { "type": "string" },
+          "updatedAt": { "type": "string" }
+        }
+      },
+      "NoticeExample": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Notice"
+        },
+        "example": [
+          {
+            "_id": "645faa8b183a745b1eb88f73",
+            "name": "Bobik",
+            "date": "13.05.2023",
+            "breed": "Fooblya",
+            "comments": "Someone takes this dumb and stupid dog away!",
+            "__v": 0,
+            "category": "sell",
+            "location": "Los Angeles, CA",
+            "sex": "male",
+            "title": "Cute and playful puppy for sale.",
+            "avatarURL": "https://res.cloudinary.com/dlhcsyg0o/image/upload/v1684752418/dog_ayamlf.jpg",
+            "owner": "6468f9254da760fc35d0aa3c",
+            "createdAt": "1970-05-20T19:18:45.065Z",
+            "updatedAt": "2000-05-20T19:18:45.065Z"
+          },
+          {
+            "_id": "646b207991915fbf1b3aa0a2",
+            "title": "BeautifulHouse snail Akhatin",
+            "category": "for-free",
+            "name": "Cheetah",
+            "date": "22.09.2020",
+            "breed": "Akhatin",
+            "avatarURL": "https://i1.poltava.to/news/22/2188/photo.jpg",
+            "sex": "male",
+            "location": "New York, NY",
+            "price": 800,
+            "comments": "Loves vegetables, herbs and outdoor activities",
+            "owner": "6468f9254da760fc35d0aa3c",
+            "createdAt": "2021-05-22T07:57:45.382Z",
+            "updatedAt": "2023-05-22T07:57:45.382Z"
+          }
+        ]
       }
     },
 
