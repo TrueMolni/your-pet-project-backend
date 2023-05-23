@@ -16,26 +16,21 @@ const userSchema = new Schema(
       type: String,
       default: null,
     },
-    avatarURL: {
-      type: String,
-      required: false,
-    },
+
     name: { type: String, require: false },
-    age: { type: Number, require: false },
-    gender: {
+    avatar: { type: String, require: false },
+    phone: {
+      type: Number,
+      require: false,
+    },  
+    city: {
       type: String,
       require: false,
-      enum: ['male', 'female'],
-      default: 'female',
     },
-    // verify: {
-    //   type: Boolean,
-    //   default: false,
-    // },
-    // verificationToken: {
-    //   type: String,
-    //   required: [true, 'Verify token is required'],
-    // },
+    birthday: {
+      type: String,
+      require: false,
+    },
     favoriteNotices: {
       type: [{ type: Schema.Types.ObjectId }],
       default: [],
@@ -46,12 +41,12 @@ const userSchema = new Schema(
 );
 
 const infoUserSchema = Joi.object({
-  photo: Joi.string(),
+  avatar: Joi.string(),
   name: Joi.string(),
   email: Joi.string(),
   phone: Joi.number(),
   city:Joi.string(),
-  birthday:Joi.string()
+  birthday:Joi.number()
 
 
 });

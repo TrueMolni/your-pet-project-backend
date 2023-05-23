@@ -4,7 +4,13 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const axios = require('axios');
 const queryString = require('query-string');
+const gravatar = require('gravatar');
+// const fs =require("fs/promises") ;
+const path =require("path") ;
+// const Jimp =require("jimp") ;
 require('dotenv').config();
+
+// const avatarsDir = path.join(__dirname, "../", "public", "usersPhotos");
 
 const { SECRET_KEY } = process.env;
 
@@ -78,13 +84,14 @@ const googleRedirect = async (req, res) => {
 // };
 
 const ctrlRegisterUser = async (req, res) => {
-  const { password } = req.body;
+  const { password,email } = req.body;
+  const photo = gravatar.url(email);
   const { error } = loginJoiSchema.validate(req.body);
   if (error) {
     throw HttpError(400, error.message);
   }
   const hashPassword = await bcrypt.hash(password, 10);
-  const newUser = { ...req.body, password: hashPassword };
+  const newUser = { ...req.body,photo, password: hashPassword };
   const user = await User.create(newUser);
   const payload = { id: user._id };
   const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '23h' });
@@ -130,16 +137,31 @@ const ctrlVerifyUser = async (req, res) => {
   }
 };
 const ctrlAddUserInfo = async (req, res) => {
+  const { _id } = req.user;
+  const { 
+    // path: tempUpload,
+     filename } = req.file;
+  // await Jimp.read(tempUpload)
+  //   .then((image) => {
+  //     image.resize(180, 180);
+  //     image.write(tempUpload);
+  //   })
+  //   .catch((err) => {
+  //     console.log(err);
+  //   });
+
+  const avatarName = `${_id}_${filename}`;
+  // const resultUpload = path.join(avatarsDir, avatarName);
+  // await fs.rename(tempUpload, resultUpload);
+  const avatarURL = path.join("avatar", avatarName);
+  await User.findByIdAndUpdate(_id, { avatar:avatarURL });
   const { error } = infoUserSchema.validate(req.body);
   if (error) {
     throw HttpError(400, error.message);
   }
-  const { name, photo, birthday, email, phone, city } = req.body;
-  const { _id } = req.user;
-
+  const { name, birthday, email, phone, city } = req.body;
   const result = await User.findByIdAndUpdate(_id, {
     name,
-    photo,
     birthday,
     email,
     phone,
@@ -148,14 +170,19 @@ const ctrlAddUserInfo = async (req, res) => {
   if (!result) {
     throw HttpError(404, `User with id ${_id} not found:(`);
   }
-
-  res.send(req.body);
+const data = {name,
+  avatar:avatarURL,
+  birthday,
+  email,
+  phone,
+  city}
+  res.json(data);
 };
 
 const ctrlGetUserInfo = async (req, res) => {
   const { _id } = req.user;
 
-  const result = await User.find(_id);
+  const result = await User.find(_id,"name email phone photo city birthday");
   if (!result) {
     throw HttpError(404, `User with id ${_id} not found:(`);
   }
