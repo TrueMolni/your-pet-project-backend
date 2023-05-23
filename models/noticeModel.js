@@ -1,10 +1,10 @@
 const Joi = require('joi');
 const { Schema, model } = require('mongoose');
 
-const validateDate = value => {
-  const dateRegex = /^\d{2}\.\d{2}\.\d{4}$/;
-  return dateRegex.test(value);
-};
+// const validateDate = value => {
+//   const dateRegex = /^\d{2}\.\d{2}\.\d{4}$/;
+//   return dateRegex.test(value);
+// };
 
 const validateLocation = (value, helpers) => {
   const regex = /^[A-Za-z\s\d_,-]+$/;
@@ -31,7 +31,7 @@ const noticeSchema = new Schema(
       required: [true, 'Set a name for the animal'],
     },
     date: {
-      type: Date,
+      type: String,
       required: [true, 'Please, select a birth of your pet'],
     },
     breed: {
@@ -59,7 +59,7 @@ const noticeSchema = new Schema(
     },
     owner: {
       type: Schema.Types.ObjectId,
-      ref: 'users',
+      ref: 'user',
       required: true,
     },
   },
@@ -73,12 +73,13 @@ const joiAddNoticeSchema = Joi.object({
     'string.min': 'Name must have at least 2 characters',
     'string.max': 'Name cannot exceed 16 characters',
   }),
-  date: Joi.date()
-    .custom(
-      validateDate,
-      'Provide a date for the notice in the format DD.MM.YYYY'
-    )
-    .required(),
+  date: Joi.string().required(),
+  // date: Joi.string()
+  //   .custom(
+  //     validateDate,
+  //     'Provide a date for the notice in the format DD.MM.YYYY'
+  //   )
+  //   .required(),
   breed: Joi.string().min(2).max(24).required().messages({
     'string.min': 'Breed must have at least 2 characters',
     'string.max': 'Breed cannot exceed 24 characters',
