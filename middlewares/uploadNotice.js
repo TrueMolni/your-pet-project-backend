@@ -1,7 +1,13 @@
+const cloudinary = require('cloudinary').v2;
 const multer = require('multer'); // бібліотека для обробки завантаження файлів у Node.js.
 const path = require('path');
-
 const { HttpError } = require('../helpers');
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_NAME2,
+  api_key: process.env.CLOUDINARY_KEY2,
+  api_secret: process.env.CLOUDINARY_SECRET2,
+});
 
 const tempDir = path.join(__dirname, '../', 'temp'); // шлях до тимчасової директорії, де будуть зберігатися завантажені файли.
 const maxAvatarSize = 9000000; // максимальний розмір файлу, обмежений 9 мегабайтами.
@@ -25,10 +31,8 @@ function fileFilter(req, file, cb) {
     cb(null, true);
     return;
   }
-
   cb(null, false);
-
-  cb(HttpError(400, 'File format should be jpeg, png, jpg, bmp'));
+  cb(new HttpError(400, 'File format should be jpeg, png, jpg, bmp'));
 }
 
 // об'єкт, який ініціалізує multer з переданою конфігурацією storage, обмеженнями розміру файлу (limits) та функцією фільтрації файлів (fileFilter).
@@ -37,4 +41,5 @@ const uploadNotice = multer({
   limits: { fileSize: maxAvatarSize },
   fileFilter,
 });
+
 module.exports = uploadNotice;
