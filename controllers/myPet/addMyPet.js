@@ -1,15 +1,7 @@
 const { MyPet } = require('../../models/myPetModel');
-const { HttpError } = require('../../helpers/index');
 const { tryCatchWrapper } = require('../../utils/index');
 
 const addMyPet = async (req, res) => {
-  const { name } = req.body;
-
-  const pet = await MyPet.findOne({ name });
-  if (pet) {
-    throw HttpError(409, `Pet ${name} already in use`);
-  }
-
   const { _id: owner } = req.user;
 
   const newPet = req.file
@@ -20,11 +12,7 @@ const addMyPet = async (req, res) => {
     ...newPet,
   });
 
-  res.status(201).json({
-    data: {
-      ...result._doc,
-    },
-  });
+  res.status(201).json(result);
 };
 
 module.exports = { addMyPet: tryCatchWrapper(addMyPet) };
