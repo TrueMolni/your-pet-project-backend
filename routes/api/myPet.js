@@ -2,11 +2,7 @@ const express = require('express');
 
 const router = express.Router();
 
-const {
-  removeMyPet,
-  addMyPet,
-  addAvatar,
-} = require('../../controllers/myPet/index');
+const { removeMyPet, addMyPet } = require('../../controllers/myPet/index');
 
 const { joiSchema } = require('../../models/myPetModel');
 const {
@@ -21,13 +17,6 @@ router.post(
   validation(joiSchema),
   uploadCloud.single('avatar'),
   addMyPet
-);
-
-router.patch(
-  '/:petId/avatar',
-  authenticate,
-  uploadCloud.single('avatar'),
-  addAvatar
 );
 
 router.delete('/:petId', authenticate, removeMyPet);

@@ -3,7 +3,7 @@ const { tryCatchWrapper } = require('../utils/index');
 const { HttpError } = require('../helpers/index');
 
 const getAllNews = async (req, res, next) => {
-  const { page, per_page } = req.query;
+  const { page, perPage } = req.query;
   const news = await News.find();
   if (!news) {
     throw HttpError(404`News not found`);
@@ -13,8 +13,8 @@ const getAllNews = async (req, res, next) => {
     begin = page * 10 - 10;
   }
   let end = 10;
-  if (per_page) {
-    end = per_page;
+  if (perPage) {
+    end = perPage;
   }
   const total = news.length;
 
@@ -23,8 +23,8 @@ const getAllNews = async (req, res, next) => {
   res.json({
     result: onePage,
     totalNews: total,
-    page: page,
-    per_page: per_page,
+    page: begin,
+    perPage: end,
   });
 };
 
