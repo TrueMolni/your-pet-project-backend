@@ -2,7 +2,6 @@ const express = require('express');
 const logger = require('morgan');
 const cors = require('cors');
 const swaggerUi = require('swagger-ui-express');
-const cloudinary = require('cloudinary').v2;
 
 const swaggerDocument = require('./swagger.json');
 
@@ -13,8 +12,6 @@ const authRouter = require('./routes/api/auth-routes.js');
 const app = express();
 
 const formatsLogger = app.get('env') === 'development' ? 'dev' : 'short';
-
-cloudinary.config({ cloudinary_url: process.env.CLOUDINARY_URL2 });
 
 app.use(logger(formatsLogger));
 app.use(cors());
