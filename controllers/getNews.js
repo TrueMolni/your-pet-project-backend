@@ -9,11 +9,13 @@ const getAllNews = async (req, res, next) => {
     throw HttpError(404`News not found`);
   }
   let begin = 0;
-  if (page) {
-    begin = page * 10 - 10;
-  }
   let end = 10;
-  if (perPage) {
+  if (page && !perPage) {
+    begin = page * end - end;
+  } else if (perPage && !page) {
+    end = perPage;
+  } else if (page && perPage) {
+    begin = page * perPage - perPage;
     end = perPage;
   }
   const total = news.length;
@@ -23,8 +25,8 @@ const getAllNews = async (req, res, next) => {
   res.json({
     result: onePage,
     totalNews: total,
-    page: begin,
-    perPage: end,
+    page: page || 1,
+    perPage: end || 10,
   });
 };
 
