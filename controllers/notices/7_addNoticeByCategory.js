@@ -9,7 +9,13 @@ const addNoticeByCategory = async (req, res) => {
     throw HttpError(400, 'Avatar is required');
   }
   const { path: tempUpload } = req.file;
-  const { url } = await cloudinary.uploader.upload(tempUpload);
+
+  const { url } = await cloudinary.uploader.upload(tempUpload, {
+    width: 600,
+    height: 600,
+    crop: 'fill',
+    gravity: 'center',
+  });
   const avatarURL = url;
 
   const result = await Notice.create({
