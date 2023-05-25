@@ -6,15 +6,14 @@ const getNewsByTitle = async (req, res, next) => {
   const { page, perPage, title } = req.query;
 
   if (!title) {
-    throw HttpError(400`Title is require`);
+    throw HttpError(400, `Title is require`);
   }
   const news = await News.find({
     title: { $regex: new RegExp(title || '', 'i') },
   });
   if (news.length === 0) {
-    throw HttpError(404`News with title=${title} not found`);
+    throw HttpError(404, `News with title ${title} not found`);
   }
-
   let begin = 0;
   let end = 10;
   if (page && !perPage) {

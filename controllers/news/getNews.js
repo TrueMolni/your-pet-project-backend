@@ -6,7 +6,7 @@ const getAllNews = async (req, res, next) => {
   const { page, perPage } = req.query;
   const news = await News.find();
   if (!news) {
-    throw HttpError(404`News not found`);
+    throw HttpError(404, `News not found`);
   }
   let begin = 0;
   let end = 10;

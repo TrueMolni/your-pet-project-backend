@@ -19,7 +19,7 @@ router.post(
   '/',
   authenticate,
   validation(joiSchema),
-  uploadCloud.single('avatar'),
+  uploadCloud.single('image'),
   addMyPet
 );
 router.get('/', authenticate, getMyPet);
