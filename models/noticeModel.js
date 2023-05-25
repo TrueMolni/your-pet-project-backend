@@ -40,7 +40,6 @@ const noticeSchema = new Schema(
     },
     avatarURL: {
       type: String,
-      required: [true, 'Upload a file with a photo of the animal'],
     },
     sex: {
       type: String,
@@ -85,7 +84,6 @@ const joiAddNoticeSchema = Joi.object({
     'string.max': 'Breed cannot exceed 24 characters',
   }),
   avatarURL: Joi.string()
-    .required()
     .max(3 * 1024 * 1024)
     .message('File size exceeds the limit (3MB)'),
   sex: Joi.string().valid('male', 'female').required(),
