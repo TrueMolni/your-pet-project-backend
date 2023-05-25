@@ -18,37 +18,37 @@ const noticeSchema = new Schema(
   {
     title: {
       type: String,
-      required: [true, 'Set a title for the animal'],
+      // required: [true, 'Set a title for the animal'],
     },
     category: {
       type: String,
-      enum: ['sell', 'lost-found', 'for-free'],
+      enum: ['sell', 'lost-found', 'for-free', 'your-pet'],
       default: 'sell',
-      required: [true, 'Select a category for the notice'],
+      // required: [true, 'Select a category for the notice'],
     },
     name: {
       type: String,
-      required: [true, 'Set a name for the animal'],
+      // required: [true, 'Set a name for the animal'],
     },
     date: {
       type: String,
-      required: [true, 'Please, select a birth of your pet'],
+      // required: [true, 'Please, select a birth of your pet'],
     },
     breed: {
       type: String,
-      required: [true, 'Set a breed for the animal'],
+      // required: [true, 'Set a breed for the animal'],
     },
     avatarURL: {
       type: String,
     },
     sex: {
       type: String,
-      enum: ['male', 'female'],
-      required: [true, 'Please, select a sex of your pet'],
+      // enum: ['male', 'female'],
+      // required: [true, 'Please, select a sex of your pet'],
     },
     location: {
       type: String,
-      required: [true, 'Please, select a location'],
+      // required: [true, 'Please, select a location'],
     },
     price: {
       type: Number,
