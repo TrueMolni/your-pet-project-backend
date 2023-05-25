@@ -32,7 +32,6 @@ const joiSchema = Joi.object({
   date: Joi.string().required(),
   breed: Joi.string(),
   sex: Joi.string(),
-  comments: Joi.string(),
   location: Joi.string(),
   price: Joi.string(),
   title: Joi.string(),
