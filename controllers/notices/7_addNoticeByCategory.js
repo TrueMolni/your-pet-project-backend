@@ -5,9 +5,9 @@ const { Notice } = require('../../models/noticeModel');
 
 const addNoticeByCategory = async (req, res) => {
   const { _id: owner } = req.user;
-  // if (!req.file) {
-  //   throw HttpError(400, 'Avatar is required');
-  // }
+  if (!req.file) {
+    throw HttpError(400, 'Avatar is required');
+  }
   console.log('req.file >>>>', req.file);
 
   const { path: tempUpload } = req.file;
