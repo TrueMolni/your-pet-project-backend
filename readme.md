@@ -16,23 +16,23 @@ a new owner for your favorite animal 🦮.
 
 ## 💻 Tech Stack
 
-**_Client:_** React, Redux Toolkit, Styled Components
+**_Client:_** React, Redux Toolkit, HTML, CSS/SCSS, FLEXBOX, BEM, JavaScript
 [ . . . ](https://github.com/fantusya/petly)
 
-**_Server:_** Node.js, Express.js, MongoDB, Multer, Cloudinary, Google sign-In,
-JWT, Swagger
+**_Server:_** Node.js, Express.js, MongoDB, API, Multer, Cloudinary, Google
+sign-In, JWT, Swagger, Gravatar, Postman, NPM, Joi
 
 ## 🔥 Swagger
 
 💿 [Swagger](https://app.swaggerhub.com/templates/NREACT25_1/Pets/1.0.0)
 
-## 👍 Our backend team
+## 👍 Our backend team 👍
 
-👩‍💻 [Yuriy Orekhov](https://www.linkedin.com/in/yuriy-orekhov/)
+👦 [Yuriy Orekhov](https://www.linkedin.com/in/yuriy-orekhov/)
 
 👧 [Yuliya Donets](https://www.linkedin.com/in/yuliya-donets/)
 
-👨🏻‍💻 [Andrii Chuiko](https://www.linkedin.com/in/andrii-chuiko/)
+👦 [Andrii Chuiko](https://www.linkedin.com/in/andrii-chuiko/)
 
 ![preview](./public/images/preview.jpg)
 
