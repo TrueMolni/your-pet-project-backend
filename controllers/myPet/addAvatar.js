@@ -8,7 +8,7 @@ const { MyPet } = require('../../models/myPetModel');
 
 const addAvatar = async (req, res) => {
   const { petId } = req.params;
-  const { path, filename } = req.file;
+  const { path } = req.file;
   // const avatarName = `${_id}_${filename}`;
   // const resultUpload = path.join(avatarsDir, avatarName);
   // await rename(tempUpload, resultUpload);
