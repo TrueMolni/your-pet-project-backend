@@ -48,6 +48,13 @@ const infoUserSchema = Joi.object({
   city: Joi.string(),
   birthday: Joi.number(),
 });
+const infoUserStringsSchema = Joi.object({
+  name: Joi.string(),
+  email: Joi.string(),
+  phone: Joi.number(),
+  city: Joi.string(),
+  birthday: Joi.number(),
+});
 
 const loginJoiSchema = Joi.object({
   password: Joi.string().min(6).required(),
