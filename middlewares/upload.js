@@ -8,13 +8,13 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_SECRET,
 });
 
-// cloudinary.image("front_face.png", {
-//   secure: true,
-//   transformation: [
-//     { width: 161, height: 161, gravity: "face", crop: "thumb" },
-//     { radius: 20 },
-//   ],
-// });
+cloudinary.image('front_face.png', {
+  secure: true,
+  transformation: [
+    { width: 161, height: 161, gravity: 'face', crop: 'thumb' },
+    { radius: 20 },
+  ],
+});
 
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
