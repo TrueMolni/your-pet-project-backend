@@ -7,7 +7,12 @@
   },
   "consumes": ["application/json", "multipart/form-data"],
   "produces": ["application/json", "multipart/form-data"],
-  "servers": [{ "url": "http://localhost:3030" }],
+  "servers": [
+    { "url": "http://localhost:3030" },
+    {
+      "url": "https://truemolni.github.io/your-pet-project-frontend"
+    }
+  ],
   "tags": [
     {
       "name": "Auth",
@@ -24,10 +29,10 @@
   ],
 
   "paths": {
-    "/register": {
+    "/api/users/register": {
       "post": {
         "tags": ["Auth"],
-        "summary": "Get endpoint",
+        "summary": "User registration",
         "responses": {
           "200": {
             "description": "Success response"
@@ -38,11 +43,24 @@
         }
       }
     },
-
-    "/login": {
+    "/api/users/login": {
       "post": {
         "tags": ["Auth"],
-        "summary": "Get endpoint",
+        "summary": "User login",
+        "responses": {
+          "200": {
+            "description": "Success response"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/api/users/logout/": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Log out user",
         "responses": {
           "200": {
             "description": "Success response"
@@ -87,7 +105,6 @@
         }
       }
     },
-
     "/api/notices/category/{categoryId}": {
       "get": {
         "tags": ["Notices"],
@@ -121,7 +138,6 @@
         }
       }
     },
-
     "/api/notices/favorite": {
       "get": {
         "tags": ["Notices"],
@@ -153,7 +169,6 @@
         "security": [{ "Bearer": [] }]
       }
     },
-
     "/api/notices/own": {
       "get": {
         "tags": ["Notices"],
@@ -185,7 +200,6 @@
         "security": [{ "Bearer": [] }]
       }
     },
-
     "/api/notices/{noticeId}": {
       "get": {
         "tags": ["Notices"],
@@ -262,7 +276,6 @@
         "security": [{ "Bearer": [] }]
       }
     },
-
     "/api/notices/favorite/{noticeId}": {
       "patch": {
         "tags": ["Notices"],
@@ -291,7 +304,6 @@
         "security": [{ "Bearer": [] }]
       }
     },
-
     "/api/notices/notice": {
       "post": {
         "tags": ["Notices"],
@@ -324,29 +336,47 @@
         "security": [{ "Bearer": [] }]
       }
     },
-
-    "/pet": {
+    "/api/pet": {
       "post": {
         "tags": ["Pets"],
-        "summary": "Create endpoint",
+        "summary": "Add animal card",
         "responses": {
           "201": {
             "description": "Created"
           },
           "400": {
-            "description": "Bad request"
+            "description": "Bad Request (invalid request body)",
+            "content": {}
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {}
+          },
+          "500": {
+            "description": "Server error"
           }
         }
-      },
+      }
+    },
+    "/api/pet/{petId}": {
       "delete": {
         "tags": ["Pets"],
-        "summary": "Delete endpoint",
+        "summary": "Removing the animal card",
         "responses": {
-          "201": {
-            "description": "Deleted"
+          "200": {
+            "description": "Successful operation"
           },
           "400": {
             "description": "Bad request"
+          },
+          "401": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Pet with id not found"
+          },
+          "500": {
+            "description": "Server error"
           }
         }
       }
