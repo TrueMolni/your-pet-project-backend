@@ -1,10 +1,5 @@
 const { HttpError } = require('../helpers');
-const {
-  User,
-  loginJoiSchema,
-  infoUserSchema,
-  infoUserStringsSchema,
-} = require('../models/users.js');
+const { User, loginJoiSchema, infoUserSchema,infoUserStringsSchema } = require('../models/users.js');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const axios = require('axios');
@@ -91,14 +86,14 @@ const googleRedirect = async (req, res) => {
 // };
 
 const ctrlRegisterUser = async (req, res) => {
-  const { password, email } = req.body;
+  const { password,email } = req.body;
   const photo = gravatar.url(email);
   const { error } = loginJoiSchema.validate(req.body);
   if (error) {
     throw HttpError(400, error.message);
   }
   const hashPassword = await bcrypt.hash(password, 10);
-  const newUser = { ...req.body, photo, password: hashPassword };
+  const newUser = { ...req.body,photo, password: hashPassword };
   const user = await User.create(newUser);
   const payload = { id: user._id };
   const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '23h' });
@@ -144,22 +139,22 @@ const ctrlVerifyUser = async (req, res) => {
   }
 };
 const ctrlAddUserInfo = async (req, res) => {
+
   cloudinary.config({
-    cloud_name: 'ddinaq6n3',
-    api_key: '149358935256577',
-    api_secret: 'yZ1Z3Y6t9OmL_yHQbk5WESOp570',
+    cloud_name: "ddinaq6n3",
+    api_key: "149358935256577",
+    api_secret: "yZ1Z3Y6t9OmL_yHQbk5WESOp570",
+
   });
   const { _id } = req.user;
-  const { filename } = req.file;
-  const url = cloudinary.url(filename, {
-    width: 180,
+  const {filename} = req.file;
+  const url = cloudinary.url(filename,{width: 180,
     height: 180,
-    Crop: 'fill',
-  });
-  console.log(url);
-  // const avatarURL = path;
+    Crop: 'fill'})
+    console.log(url)
+ // const avatarURL = path;
 
-  await User.findByIdAndUpdate(_id, { avatar: url });
+  await User.findByIdAndUpdate(_id, { avatar:url });
   const { error } = infoUserSchema.validate(req.body);
   if (error) {
     throw HttpError(400, error.message);
@@ -175,14 +170,19 @@ const ctrlAddUserInfo = async (req, res) => {
   if (!result) {
     throw HttpError(404, `User with id ${_id} not found:(`);
   }
-  const data = { name, avatar: url, birthday, email, phone, city };
+const data = {name,
+  avatar:url,
+  birthday,
+  email,
+  phone,
+  city}
   res.json(data);
 };
 
 const ctrlGetUserInfo = async (req, res) => {
   const { _id } = req.user;
 
-  const result = await User.find(_id, 'name email phone avatar city birthday');
+  const result = await User.find(_id,"name email phone avatar city birthday");
   if (!result) {
     throw HttpError(404, `User with id ${_id} not found:(`);
   }
@@ -192,7 +192,7 @@ const ctrlGetUserInfo = async (req, res) => {
 
 const ctrlAddUserInfoString = async (req, res) => {
   const { _id } = req.user;
-  console.log('1', req.body);
+  console.log("1",req.body)
   const { error } = infoUserStringsSchema.validate(req.body);
   if (error) {
     throw HttpError(400, error.message);
@@ -208,7 +208,11 @@ const ctrlAddUserInfoString = async (req, res) => {
   if (!result) {
     throw HttpError(404, `User with id ${_id} not found:(`);
   }
-  const data = { name, birthday, email, phone, city };
+const data = {name,
+  birthday,
+  email,
+  phone,
+  city}
   res.json(data);
 };
 const ctrls = {
@@ -220,6 +224,6 @@ const ctrls = {
   ctrlLoginUser,
   ctrlLogOut,
   ctrlVerifyUser,
-  ctrlAddUserInfoString,
+  ctrlAddUserInfoString
 };
 module.exports = ctrls;

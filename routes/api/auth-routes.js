@@ -15,4 +15,5 @@ router.post('/user', authenticate,uploadUserPhoto.single("photo")
 , tryCatchWrapper(ctrls.ctrlAddUserInfo)
 );
 router.get('/user', authenticate, tryCatchWrapper(ctrls.ctrlGetUserInfo));
+router.patch('/user', authenticate, tryCatchWrapper(ctrls.ctrlAddUserInfoString));
 module.exports = router;
