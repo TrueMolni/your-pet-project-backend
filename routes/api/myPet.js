@@ -5,7 +5,7 @@ const router = express.Router();
 const {
   removeMyPet,
   addMyPet,
-  addAvatar,
+  getMyPet,
 } = require('../../controllers/myPet/index');
 
 const { joiSchema } = require('../../models/myPetModel');
@@ -19,16 +19,10 @@ router.post(
   '/',
   authenticate,
   validation(joiSchema),
-  uploadCloud.single('avatar'),
+  uploadCloud.single('image'),
   addMyPet
 );
-
-router.patch(
-  '/:petId/avatar',
-  authenticate,
-  uploadCloud.single('avatar'),
-  addAvatar
-);
+router.get('/', authenticate, getMyPet);
 
 router.delete('/:petId', authenticate, removeMyPet);
 

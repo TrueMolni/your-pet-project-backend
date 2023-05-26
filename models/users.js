@@ -22,7 +22,7 @@ const userSchema = new Schema(
     phone: {
       type: Number,
       require: false,
-    },  
+    },
     city: {
       type: String,
       require: false,
@@ -45,10 +45,15 @@ const infoUserSchema = Joi.object({
   name: Joi.string(),
   email: Joi.string(),
   phone: Joi.number(),
-  city:Joi.string(),
-  birthday:Joi.number()
-
-
+  city: Joi.string(),
+  birthday: Joi.number(),
+});
+const infoUserStringsSchema = Joi.object({
+  name: Joi.string(),
+  email: Joi.string(),
+  phone: Joi.number(),
+  city: Joi.string(),
+  birthday: Joi.number(),
 });
 const infoUserStringsSchema=Joi.object({
   name: Joi.string(),
@@ -74,4 +79,10 @@ const loginJoiSchema = Joi.object({
 
 const User = model('user', userSchema);
 
-module.exports = { User, infoUserSchema, loginJoiSchema ,infoUserStringsSchema};
+
+module.exports = {
+  User,
+  infoUserSchema,
+  loginJoiSchema,
+  infoUserStringsSchema,
+};
